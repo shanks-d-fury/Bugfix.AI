@@ -1,0 +1,26 @@
+body {
+	overflow: hidden;
+}
+.scroll-div {
+	position: relative;
+	bottom: 1rem;
+	max-height: 68vh;
+}
+.scroll-div::-webkit-scrollbar {
+	/* height: 8px; */
+	width: 0.5rem;
+	overflow-y: auto;
+}
+.scroll-div::-webkit-scrollbar-track {
+	background: #f1f1f165;
+	border-radius: 10px;
+}
+
+.scroll-div::-webkit-scrollbar-thumb {
+	background: #c5c3c3; /* Scrollbar color */
+	border-radius: 10px; /* Rounded edges */
+}
+
+.scroll-div::-webkit-scrollbar-thumb:hover {
+	background: #d7d7d7; /* Darker on hover */
+}
