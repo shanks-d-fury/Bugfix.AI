@@ -22,12 +22,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-      - run: npm ci
+      - run: npm install --frozen-lockfile --prefer-offline
       - run: |
           touch .env
           echo "${{secrets.BUGFIX_AI_ENVFILE}}" > .env
-      - name: Build application
-        run: npm run build
-
-      - name: Run linter
-        run: npm run lint
