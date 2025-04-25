@@ -25,4 +25,4 @@ jobs:
     - run: npm ci
     - run: |
         touch .env
-        echo "$({secrets.BUGFIX_AI_ENV_FILE)}) > .env
+        echo "$({secrets.BUGFIX_AI_ENVFILE)}) > .env
