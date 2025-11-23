@@ -20,31 +20,6 @@ function CopyButton({ content }) {
 	);
 }
 
-function ShowEmail() {
-	const [visible, setVisible] = useState(false);
-	const [current, setCurrent] = useState("");
-
-	return (
-		<div className="mt-4">
-			<button
-				onClick={() => {
-					setCurrent(getGlobalEmail());
-					setVisible((v) => !v);
-				}}
-				className="px-4 py-2 text-sm font-medium rounded bg-gray-700 hover:bg-gray-600 text-gray-100 border border-gray-600"
-			>
-				{visible ? "Hide Saved Email" : "Show Saved Email"}
-			</button>
-			{visible && (
-				<p className="mt-2 text-sm text-gray-400">
-					Saved email:{" "}
-					<span className="text-gray-200">{current || "None"}</span>
-				</p>
-			)}
-		</div>
-	);
-}
-
 export default function Page() {
 	let yamlFileContent = `name: AI review for last pushed file
 
@@ -92,8 +67,9 @@ jobs:
 				<div className="bg-[#121212] border border-gray-700 rounded-md shadow-lg">
 					<div className="px-8 py-4 text-gray-300">
 						<h2 className="text-3xl font-bold mb-2">How to Use?</h2>
-						1. Copy this code and add it to a GitHub Actions workflow YAML file
-						in your repository.
+						<span className="font-semibold text-blue-400">Step 1:</span> Copy
+						this code and add it to a GitHub Actions workflow YAML file in your
+						repository.
 					</div>
 
 					<div className="relative mx-8 mb-10 bg-[#0f0f0f] border border-gray-800 rounded">
@@ -103,7 +79,8 @@ jobs:
 						<CopyButton content={yamlFileContent} />
 					</div>
 					<div className="px-8 py-4 text-gray-300">
-						2. Enter the email address where you want to receive the report.
+						<span className="font-semibold text-blue-400">Step 2:</span>Enter
+						the email address where you want to receive the report.
 						<form
 							onSubmit={(e) => {
 								e.preventDefault();
@@ -140,10 +117,11 @@ jobs:
 							</div>
 						</form>
 					</div>
-
-					{/* Added block to show saved email */}
-					<div className="px-8 pb-8 text-gray-300">
-						<ShowEmail />
+					<div className="px-8 py-4 text-gray-300 ">
+						<span className="font-semibold text-blue-400">Step 3:</span> Push
+						your code file to your repository. The workflow will automatically
+						detect the last changed file, analyze it for bugs, and send a
+						detailed report to your saved email address.
 					</div>
 				</div>
 			</section>

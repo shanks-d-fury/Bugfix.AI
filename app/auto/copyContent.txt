@@ -1,0 +1,30 @@
+name: AI review for last pushed file
+
+on:
+  push:
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Find the last changed file
+        id: detect_file
+        run: |
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          LAST_FILE=$(echo "$CHANGED_FILES" | tail -n 1)
+          echo "last_file=$LAST_FILE" >> $GITHUB_OUTPUT
+
+      - name: Read the entire file
+        id: read_file
+        run: |
+          cat "${{ steps.detect_file.outputs.last_file }}" > filecontent.txt
+
+      - name: Send code to AI API
+        run: |
+          curl -X POST https://your-api/review \
+            --data-binary @filecontent.txt
