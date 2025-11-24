@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { Spiral } from "ldrs/react";
-import "ldrs/react/Spiral.css";
+import React from "react";
+import { LineSpinner } from "ldrs/react";
+import "ldrs/react/LineSpinner.css";
+
+const backend_url = "https://bugfix-backend-cl57.vercel.app";
 
 const InputFields = ({
 	result,
@@ -11,26 +13,26 @@ const InputFields = ({
 	setSelectedFile,
 	inputValue,
 	setInputValue,
+	setHasSubmitted,
 }) => {
+	const fileInputRef = React.useRef(null);
+
 	const onSubmit = async () => {
 		try {
 			setLoading(true);
 			setResult("");
 
-			const response = await fetch(
-				"https://bugfix-backend-cl57.vercel.app/api/bugfix",
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						code: selectedFile
-							? `${await readFile(selectedFile)}\n\nQuestion: ${inputValue}`
-							: inputValue,
-					}),
-				}
-			).catch((err) => {
+			const response = await fetch(`${backend_url}/api/bugfix`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					code: selectedFile
+						? `${await readFile(selectedFile)}\n\nQuestion: ${inputValue}`
+						: inputValue,
+				}),
+			}).catch((err) => {
 				// Network/CORS errors
 				throw new Error(
 					`Network error: ${err.message}. Check if the server allows CORS.`
@@ -65,6 +67,9 @@ const InputFields = ({
 			setLoading(false);
 			setInputValue("");
 			setSelectedFile(null);
+			if (fileInputRef.current) {
+				fileInputRef.current.value = "";
+			}
 		}
 	};
 
@@ -104,7 +109,12 @@ const InputFields = ({
 			<div className="flex w-full items-center gap-2">
 				<div className="flex items-center w-full rounded-full border border-gray-300 ">
 					<label className="flex items-center justify-center px-4 py-3 bg-gray-100 hover:bg-white-500  rounded-l-full cursor-pointer text-black text-lg">
-						<input type="file" onChange={handleFileChange} className="hidden" />
+						<input
+							ref={fileInputRef}
+							type="file"
+							onChange={handleFileChange}
+							className="hidden"
+						/>
 						<i className="fa-regular fa-file"></i>
 					</label>
 					<input
@@ -113,7 +123,7 @@ const InputFields = ({
 						onChange={handleTextChange}
 						onKeyDown={handleKeyPress}
 						disabled={loading}
-						placeholder="Ask BugFix.AI"
+						placeholder="Describe your bug or paste your code here..."
 						className="w-full px-4 py-2 outline-none bg-transparent"
 					/>
 				</div>
@@ -124,7 +134,7 @@ const InputFields = ({
 					disabled={loading}
 				>
 					{loading ? (
-						<Spiral size="15" speed="0.9" color="black" />
+						<LineSpinner size="15" stroke="1" speed="1" color="black" />
 					) : (
 						<i className="fa-regular fa-paper-plane"></i>
 					)}
