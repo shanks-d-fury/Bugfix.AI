@@ -3,8 +3,8 @@ body {
 }
 .scroll-div {
 	position: relative;
-	bottom: 1rem;
-	max-height: 68vh;
+	bottom: 2rem;
+	max-height: 64vh;
 }
 .scroll-div::-webkit-scrollbar {
 	/* height: 8px; */

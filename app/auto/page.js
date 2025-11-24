@@ -126,7 +126,9 @@ jobs:
 							Create (or Enter) the Workflows Directory
 						</p>
 						<ul className="list-disc ml-6">
-							<li className="text-sm">Click "Add file" → "Create new file".</li>
+							<li className="text-sm">
+								Click &quot;Add file&quot; → &quot;Create new file&quot;.
+							</li>
 							<li className="text-sm">
 								In the filename box, type{" "}
 								<b className="text-blue-400">.github/workflows/ai-review.yml</b>{" "}
